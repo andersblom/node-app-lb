@@ -1,0 +1,24 @@
+services:
+  web1:
+    build: .
+    ports:
+      - 3002:3000
+    networks:
+      - lb-network
+  web2:
+    build: .
+    ports:
+      - 3003:3000
+    networks:
+      - lb-network
+  nginx:
+    build: ./loadbalancer
+    ports:
+      - 80:80
+    networks:
+      - lb-network
+    depends_on:
+      - web1
+      - web2
+networks:
+  lb-network: {}
